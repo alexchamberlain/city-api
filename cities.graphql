@@ -1,0 +1,25 @@
+type Country {
+    iso: String!
+    name: String!
+
+    cities: [City!]!
+}
+
+type City {
+    geonameID: Int!
+    name: String!
+    latitude: Float!
+    longitude: Float!
+    population: Int!
+
+    country: Country!
+}
+
+type Query {
+    country(iso: String!): Country!
+    city(name: String, geonameID: Int): City!    
+}
+
+schema {
+  query: Query
+}

@@ -1,0 +1,79 @@
+query country {
+  country(iso: "GB") {
+    iso
+    name
+  }
+}
+
+query country_with_cities {
+  country(iso: "GB") {
+    iso
+    name
+    cities {
+      geonameID
+      name
+      latitude
+      longitude
+      population
+    }
+  }
+}
+
+query city_london {
+  city(name:"London") {
+    geonameID
+    name
+    latitude
+    longitude
+    population
+  }
+}
+
+query city_2643743 {
+  city(geonameID:2643743) {
+    geonameID
+    name
+    latitude
+    longitude
+    population
+  }
+}
+
+query city_2643743_with_country {
+  city(geonameID:2643743) {
+    geonameID
+    name
+    latitude
+    longitude
+    population
+    country {
+      iso
+      name
+    }
+  }
+}
+
+query city_multiple_cities {
+  london: city(geonameID: 2643743) {
+    geonameID
+    name
+    latitude
+    longitude
+    population
+    country {
+      iso
+      name
+    }
+  }
+  new_york: city(geonameID: 5128581) {
+    geonameID
+    name
+    latitude
+    longitude
+    population
+    country {
+      iso
+      name
+    }
+  }
+}
