@@ -10,6 +10,10 @@ a clean Postgres database. You can use
 DATABASE_URL before running [`dump-geonames.py`](dump-geonames.py) to load
 the database with sample data.
 
+## Testing
+
+Just run `tox`. :)
+
 ## Attribution
 
 The data used for this example comes from [Geonames][1] under a Creative Commons
