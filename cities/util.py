@@ -35,7 +35,4 @@ def loader_resolver(object_type, unbound_method):
 
 
 def get_loader(resolve_info, object_type):
-    if 'request' in resolve_info.context:
-        return resolve_info.context['request']['loaders'][object_type]
-    else:
-        return resolve_info.context['loaders'][object_type]
+    return resolve_info.context['loaders'][object_type]

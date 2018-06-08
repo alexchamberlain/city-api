@@ -4,7 +4,7 @@ import os
 from graphql.execution.executors.asyncio import AsyncioExecutor
 
 from sanic import Sanic
-from sanic_graphql import GraphQLView
+import sanic_graphql
 
 import asyncpg
 
@@ -37,14 +37,6 @@ async def acquire_db(request):
     request['db'] = await request.app.pool.acquire()
 
 
-@app.middleware('request')
-async def setup_loaders(request):
-    request['loaders'] = {
-        'Country': CountryLoader(request['db']),
-        'City': CityLoader(request['db'])
-    }
-
-
 @app.middleware('response')
 async def release_db(request, response):
     await request.app.pool.release(request['db'])
@@ -63,3 +55,14 @@ async def init_graphql(app, loop):
         '/graphql',
         methods=['POST', 'OPTIONS']
     )
+
+
+class GraphQLView(sanic_graphql.GraphQLView):
+    def get_context(self, request):
+        return {
+            'db': request['db'],
+            'loaders': {
+                'Country': CountryLoader(request['db']),
+                'City': CityLoader(request['db'])
+            }
+        }
